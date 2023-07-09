@@ -1,4 +1,4 @@
-const ApiData = [
+export let ApiData = [
   {
     "EMPLOYEE ID": 1,
     "EMPLOYEE NAME": "Raj",
