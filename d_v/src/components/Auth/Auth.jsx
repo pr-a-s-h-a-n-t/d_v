@@ -1,77 +1,133 @@
 import React from "react";
-import styles from "../../../style/LandingPage.module.scss";
-import lp_img_contn from "../../../assets/lp_img_contn.png";
-import lp_instagram from "../../../assets/lp_instagram.png";
-import lp_1 from "../../../assets/lp_1.png";
-import lp_2 from "../../../assets/lp_2.png";
-import lp_3 from "../../../assets/lp_3.png";
-import lp_4 from "../../../assets/lp_4.png";
-import { useNavigate } from "react-router-dom";
-const Auth = () => {
-  const navigate = useNavigate();
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault();
+import Avatar from "@mui/material/Avatar";
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Paper,
+  Box,
+  Grid,
+  Typography,
+} from "@mui/material";
 
-    if (input.email === "" || input.password === "") {
-      return alert("please fill all the fields");
-    } else if (input.email === "admin@xyz.com" && input.password === "admin") {
-      window.localStorage.setItem("userCred", JSON.stringify(input));
-      navigate("/dashboard/home");
-      console.log("success");
-    }
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+
+import authService from "./Service";
+import { useNavigate } from "react-router-dom";
+
+export default function SignInSide(props) {
+  const navigate = useNavigate();
+  if (authService.isLoggedIn()) {
+    navigate("/");
+  }
+
+  const [account, setAccount] = React.useState({ username: "", password: "" });
+
+  const handelAccount = (property, event) => {
+    const accountCopy = { ...account };
+    accountCopy[property] = event.target.value;
+
+    setAccount(accountCopy);
   };
 
-  //   email:- admin@xyz.com
-  //  password:- 'admin'
+  const handelLogin = () => {
+    authService.doLogIn(account.username);
+    setAccount({ username: "", password: "" });
+    navigate("/dashboard/home");
+  };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setInput({
-      ...input,
-      [name]: value,
-    });
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    handelLogin();
   };
 
   return (
-    <section>
-      <div className={styles._container}>
-        <div className={styles._left}></div>
-        <div className={styles._right}>
-          <div className={styles._right__container}>
-            <img src={lp_instagram} alt="logo" />
-            <form onSubmit={(e) => handleSubmit(e)}>
-              <input
-                required
-                onChange={(e) => {
-                  handleInputChange;
-                }}
-                type="text"
-                placeholder="Email"
-              />
-              <input
-                onChange={(e) => {
-                  handleInputChange;
-                }}
-                required
-                type="password"
-                placeholder="Password"
-              />
-              <button type="submit">Log in</button>
-              {/* <div>
-                  <p>
-                    Don't have an account?<a href="/signup"> Sign up</a>
-                  </p>
-                </div> */}
-            </form>
-          </div>
+    <Grid
+      container
+      component="main"
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CssBaseline />
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={1}
+        square
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            margin: "2rem 0rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar style={{ margin: 0, backgroundColor: "#f50057" }}>
+            <LockOpenIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5" style={{ marginTop: "1rem" }}>
+            Sign in
+          </Typography>
+          <form
+            style={{ width: "100%", marginTop: "1rem" }}
+            onSubmit={handleFormSubmit}
+            noValidate
+          >
+            <TextField
+              onChange={(event) => handelAccount("username", event)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoFocus
+            />
+            <TextField
+              onChange={(event) => handelAccount("password", event)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              style={{ margin: "2rem 0 1rem" }}
+            >
+              Sign In
+            </Button>
+          </form>
         </div>
-      </div>
-    </section>
+      </Grid>
+    </Grid>
   );
-};
-
-export default Auth;
+}
