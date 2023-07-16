@@ -56,6 +56,8 @@ function Table() {
     float: "right",
     padding: "4px 14px",
     fontSize: "18px",
+    background: "#ffff",
+    color: "grey",
   };
 
   return (

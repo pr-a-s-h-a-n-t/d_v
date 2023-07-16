@@ -20,7 +20,6 @@ function createData(id, name, description) {
   return { id, name, description };
 }
 
- 
 export default function StickyHeadTable({ data, handleDelete }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
@@ -41,10 +40,21 @@ export default function StickyHeadTable({ data, handleDelete }) {
           width: "100%",
           maxHeight: "500px",
           overflow: "scroll",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            backgroundColor: "grey" /* Scrollbar color */,
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "lightgrey" /* Scrollbar thumb color */,
+          },
         }}
       >
         <Table sx={{ width: "100%" }} stickyHeader aria-label="sticky table">
-          <TableHead>
+          <TableHead
+            sx={{
+              background: "grey !important" /* Table head color */,
+            }}
+          >
             <TableRow>
               {columns.map((column) => (
                 <TableCell

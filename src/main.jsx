@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               transform: "translate(-50%, -50%)",
             }}
           >
-            <img src={dv} alt="loding icon" />
+            <img src={dv} alt="loading icon" />
           </div>
         }
       >
