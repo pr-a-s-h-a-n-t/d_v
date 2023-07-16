@@ -277,22 +277,48 @@ function Table() {
       );
     });
   }, [searchValue]);
+  const filterStyle = {
+    width: "100%",
+  };
+
+  const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    padding: "2rem 0px",
+  };
+
+  const headingStyle = {
+    width: "fit-content",
+    float: "right",
+    fontSize: "24px",
+    margin: "4px 0px",
+  };
+
+  const inputStyle = {
+    height: "2.5rem",
+    width: "26%",
+    borderRadius: "1rem",
+    float: "right",
+    padding: "4px 14px",
+    fontSize: "18px",
+  };
 
   return (
-    <div
-      style={{
-        width: "100%",
-      }}
-    >
-      <div>
-        <input type="text" onChange={(e) => handleSearch(e.target.value)} />
+    <div style={filterStyle}>
+      <div style={containerStyle}>
+        <h3 style={headingStyle}>Filter</h3>
+        <input
+          type="text"
+          style={inputStyle}
+          placeholder="Search By Employee Description"
+          onChange={(e) => handleSearch(e.target.value)}
+        />
       </div>
-      <div
-        style={{
-          width: "100%",
-        }}
-      >
-        <TableComponent data={ApiData} /> {/* Pass the filtered data */}
+      <div style={filterStyle}>
+        {/* Pass the filtered data */}
+        <TableComponent data={ApiData} />
       </div>
     </div>
   );
