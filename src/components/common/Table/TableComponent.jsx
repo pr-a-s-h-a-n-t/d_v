@@ -20,14 +20,8 @@ function createData(id, name, description) {
   return { id, name, description };
 }
 
-const rows = [
-  createData(1, "Raj", ".NET Developer"),
-  createData(2, "Mano", "Angular Developer"),
-  createData(3, "Mohan", "React Developer"),
-  // Add more data rows here
-];
-
-export default function StickyHeadTable({ data }) {
+ 
+export default function StickyHeadTable({ data, handleDelete }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
 
@@ -38,11 +32,6 @@ export default function StickyHeadTable({ data }) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-
-  const handleDelete = (id) => {
-    // Perform the delete operation based on the id
-    console.log("Delete entry with ID:", id);
   };
 
   return (
@@ -81,7 +70,7 @@ export default function StickyHeadTable({ data }) {
                             <Button
                               variant="contained"
                               color="secondary"
-                              onClick={() => handleDelete(row.id)}
+                              onClick={() => handleDelete(row)}
                             >
                               Delete
                             </Button>
